@@ -2,7 +2,6 @@
     "name": "cryptocloud/cryptocloud",
     "description": "CryptoCloud cryptoprocessing is characterized by ease of registration, ease of use, extensive functionality, and prompt customer support for users from the CIS and beyond.",
     "type": "library",
-    "version": "1.0.0",
     "license": "MIT",
     "autoload": {
         "psr-4": {
