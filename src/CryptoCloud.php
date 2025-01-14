@@ -141,7 +141,3 @@ class CryptoCloud
     }
 }
 
-
-// // Пример использования
-// $token = "eyJ0eXAi1iJKV1QiLCJhbGciOiJIAcI1NiJ9.eyJpZCI6MTMsImV4cCI6MTYzMTc4NjQyNn0.HQavV3z8dFnk56bX3MSY5X9lR6qVa9YhAoeTEH";
-// $cryptoCloud = new Cryptocloud($token);
