@@ -1,0 +1,20 @@
+{
+    "name": "cryptocloud/cryptocloud",
+    "description": "CryptoCloud cryptoprocessing is characterized by ease of registration, ease of use, extensive functionality, and prompt customer support for users from the CIS and beyond.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "CryptoCloud\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Grisha Sychev",
+            "email": "100209515+grisha-sychev@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}
