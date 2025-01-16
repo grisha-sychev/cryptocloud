@@ -2,9 +2,6 @@
 
 namespace CryptoCloud;
 
-use CryptoCloud\Types\Decimal;
-use CryptoCloud\Types\Dict;
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
@@ -13,12 +10,12 @@ class CryptoCloud
     private Client $client;
     private string $token;
 
-    public function __construct(string $token)
+    public function __construct(string $token, $verify = true)
     {
         $this->token = $token;
         $this->client = new Client([
             'base_uri' => 'https://api.cryptocloud.plus/v2/',
-            'timeout'  => 5.0,
+            'verify' => $verify,
         ]);
     }
 
@@ -27,18 +24,18 @@ class CryptoCloud
         $this->request('invoice/create');
     }
 
-    public function create(Decimal $amount, string $shopId, string $currency = '', Dict $add_fields, string $order_id = '', string $email = '')
+    public function create(float $amount, string $shopId, string $currency = '', array $add_fields = [], string $order_id = '', string $email = '')
     {
         $data = [
             'amount' => $amount,
             'shop_id' => $shopId,
             'currency' => $currency,
-            'add_fields' => $add_fields->toArray(),
+            'add_fields' => $add_fields,
             'order_id' => $order_id,
             'email' => $email
         ];
 
-        $this->request('invoice/create', $data);
+       $this->request('invoice/create', $data);
     }
 
     public function cancel(string $uuid)
