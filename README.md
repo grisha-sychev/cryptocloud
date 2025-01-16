@@ -118,20 +118,20 @@ use CryptoCloud\CryptoCloud;
 
 $cryptoCloud = new CryptoCloud('your-api-token');
 
-// Create an invoice
+// Create an invoice in USD
 $response = $cryptoCloud->create('shop123', 100.00);
 
 // Cancel an invoice
-$cancelResponse = $cryptoCloud->cancel('uuid-12345');
+$cancelResponse = $cryptoCloud->cancel('INV-XXXXXXXX and XXXXXXXX');
 
 // List invoices
-$listResponse = $cryptoCloud->list('2025-01-01', '2025-01-31');
+$listResponse = $cryptoCloud->list('dd.mm.yyyy', 'dd.mm.yyyy');
 
 // Get wallet balance
 $balanceResponse = $cryptoCloud->balance();
 
 // Get statistics
-$statsResponse = $cryptoCloud->statistics('2025-01-01', '2025-01-31');
+$statsResponse = $cryptoCloud->statistics('dd.mm.yyyy', 'dd.mm.yyyy');
 ```
 
 ## License
