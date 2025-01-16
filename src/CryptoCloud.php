@@ -19,23 +19,17 @@ class CryptoCloud
         ]);
     }
 
-    public function authorization()
-    {
-        $this->request('invoice/create');
-    }
-
-    public function create(float $amount, string $shopId, string $currency = '', array $add_fields = [], string $order_id = '', string $email = '')
+    public function create(string $shopId, float $amount, string $currency = 'USD', string $order_id = '', string $email = '')
     {
         $data = [
-            'amount' => $amount,
             'shop_id' => $shopId,
+            'amount' => $amount,
             'currency' => $currency,
-            'add_fields' => $add_fields,
             'order_id' => $order_id,
-            'email' => $email
+            'email' => $email,
         ];
 
-       $this->request('invoice/create', $data);
+        return $this->request('invoice/create', $data);
     }
 
     public function cancel(string $uuid)
@@ -44,7 +38,7 @@ class CryptoCloud
             'uuid' => $uuid,
         ];
 
-        $this->request('invoice/merchant/canceled', $data);
+        return $this->request('invoice/merchant/canceled', $data);
     }
 
     public function list(string $start, string $end, int $offset = 0, int $limit = 10)
@@ -56,7 +50,7 @@ class CryptoCloud
             'limit' => $limit,
         ];
 
-        $this->request('invoice/merchant/list', $data);
+        return $this->request('invoice/merchant/list', $data);
     }
 
     public function info(array $uuids)
@@ -70,7 +64,7 @@ class CryptoCloud
 
     public function balance()
     {
-        $this->request('merchant/wallet/balance/all');
+        return $this->request('merchant/wallet/balance/all');
     }
 
     public function statistics(string $start, string $end)
@@ -80,7 +74,7 @@ class CryptoCloud
             'end' => $end,
         ];
 
-        $this->request('invoice/merchant/statistics', $data);
+        return $this->request('invoice/merchant/statistics', $data);
     }
 
     public function static(string $shopId, string $currency, string $identify)
@@ -91,7 +85,7 @@ class CryptoCloud
             'identify' => $identify,
         ];
 
-        $this->request('invoice/static/create', $data);
+        return $this->request('invoice/static/create', $data);
     }
 
     public function postback()
@@ -128,13 +122,12 @@ class CryptoCloud
             $response = $this->client->post($endpoint, $options);
 
             if ($response->getStatusCode() === 200) {
-                echo "Success: " . $response->getBody();
+                return $response->getBody();
             } else {
-                echo "Fail: " . $response->getStatusCode() . " " . $response->getBody();
+                return [$response->getStatusCode(), $response->getBody()];
             }
         } catch (RequestException $e) {
-            echo 'Error: ' . $e->getMessage();
+            return $e->getMessage();
         }
     }
 }
-
