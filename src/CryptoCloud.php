@@ -9,20 +9,23 @@ class CryptoCloud
 {
     private Client $client;
     private string $token;
+    private string $shopId;
 
-    public function __construct(string $token = '', $verify = true)
+    public function __construct(string $token = '', string $shopId = '',  $verify = true)
     {
         $this->token = $token;
+        $this->shopId = $shopId;
+
         $this->client = new Client([
             'base_uri' => 'https://api.cryptocloud.plus/v2/',
             'verify' => $verify,
         ]);
     }
 
-    public function create(string $shopId, float $amount, string $currency = 'USD', string $order_id = '', string $email = '')
+    public function create(float $amount, string $currency = 'USD', string $order_id = '', string $email = '')
     {
         $data = [
-            'shop_id' => $shopId,
+            'shop_id' => $this->shopId,
             'amount' => $amount,
             'currency' => $currency,
             'order_id' => $order_id,
@@ -77,10 +80,10 @@ class CryptoCloud
         return $this->request('invoice/merchant/statistics', $data);
     }
 
-    public function static(string $shopId, string $currency, string $identify)
+    public function static(string $currency, string $identify)
     {
         $data = [
-            'shop_id' => $shopId,
+            'shop_id' => $this->shopId,
             'currency' => $currency,
             'identify' => $identify,
         ];
@@ -116,7 +119,7 @@ class CryptoCloud
             $response = $this->client->post($endpoint, $options);
 
             if ($response->getStatusCode() === 200) {
-                return $response->getBody();
+                return json_decode($response->getBody());
             } else {
                 return [$response->getStatusCode(), $response->getBody()];
             }
