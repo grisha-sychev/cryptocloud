@@ -10,7 +10,7 @@ class CryptoCloud
     private Client $client;
     private string $token;
 
-    public function __construct(string $token, $verify = true)
+    public function __construct(string $token = '', $verify = true)
     {
         $this->token = $token;
         $this->client = new Client([
@@ -91,18 +91,12 @@ class CryptoCloud
     public function postback()
     {
         $body = file_get_contents('php://input');
-        $data = [];
+        $data = json_decode($body, true);
 
         parse_str($body, $data);
+        $array = json_decode(json_encode($data, JSON_PRETTY_PRINT));
 
-        return [
-            'status' => $data['status'] ?? null,
-            'invoice_id' => $data['invoice_id'] ?? null,
-            'amount_crypto' => $data['amount_crypto'] ?? null,
-            'currency' => $data['currency'] ?? null,
-            'order_id' => $data['order_id'] ?? null,
-            'token' => $data['token'] ?? null,
-        ];
+        return (array) $array;
     }
 
     private function request(string $endpoint, array $data = [])
